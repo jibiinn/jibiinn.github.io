@@ -1,0 +1,350 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Jibin Johny - Portfolio</title>
+<meta name="description" content="Hardware design engineer. PCB design, embedded hardware and EMI-aware layout. Projects, experience and resume.">
+<meta property="og:title" content="Jibin Johny - Portfolio">
+<meta property="og:description" content="Hardware design engineer. Projects, experience and resume.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%232160c4'/%3E%3Ctext x='32' y='43' font-size='30' text-anchor='middle' fill='white' font-family='Arial'%3EJJ%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap">
+<style>
+/* Layout: sticky nav, left-aligned hero over drifting dots, two-column about, card grids, alternating timeline, footer. Inter only, one blue accent. */
+:root{
+  /* Colors sampled pixel-for-pixel from the reference screenshots. Single light look on purpose. */
+  --bg:#f9fafb;
+  --bg-alt:#f9fafb;
+  --card:#ffffff;
+  --fg:#131720;
+  --muted:#65758b;
+  --line:#dae0e7;
+  --tl:#e8ecf0;
+  --chip:#edeff3;
+  --chip-fg:#262f40;
+  --accent:#2160c4;
+  --on-accent:#ffffff;
+  --dot:#aeb7c3;
+  --font:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  color-scheme:light;
+}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);font-size:18px;line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:6px}
+#dots{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none}
+main,header.nav,footer{position:relative;z-index:1}
+.in{max-width:1200px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+/* nav */
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:transparent;border-bottom:1px solid transparent;transition:background .2s,border-color .2s}
+header.nav.scrolled{background:rgba(250,251,252,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav .in{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.logo{font-weight:300;font-size:28px;letter-spacing:-.02em;color:var(--accent)}
+.links{display:flex;align-items:center;gap:36px;font-size:17px;font-weight:500;color:var(--muted)}
+.links a:hover{color:var(--fg)}
+.btn{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:var(--on-accent);font-weight:600;font-size:17px;padding:10px 20px;border-radius:8px;border:0;font-family:inherit;cursor:pointer;transition:filter .15s}
+.btn:hover{filter:brightness(1.08)}
+.btn svg{width:18px;height:18px}
+@media (max-width:820px){.links a.l{display:none}.links{gap:0}}
+
+/* sections */
+section{padding-block:96px;background:var(--card)}
+section.alt{background:transparent}
+.herobg{position:absolute;top:0;left:0;right:0;height:100svh;z-index:-1;background:linear-gradient(135deg,#eff3f9 0%,#f9fafb 100%)}
+.rule{width:60px;height:2px;background:var(--accent);margin-bottom:28px}
+h2{font-size:clamp(34px,5vw,48px);line-height:1.15;font-weight:600;letter-spacing:-.02em;margin:0 0 16px}
+.center{text-align:center}
+.center .rule{margin-inline:auto}
+.sub{color:var(--muted);font-size:20px;max-width:700px;margin:0 auto 56px}
+
+/* hero */
+#home{background:transparent;min-height:calc(100svh - 68px - env(safe-area-inset-top,0px));display:flex;flex-direction:column;justify-content:center;padding-block:56px 40px;position:relative}
+.hero{max-width:896px;margin:0 auto;width:100%;padding-inline:max(24px,env(safe-area-inset-left,0px)) max(24px,env(safe-area-inset-right,0px))}
+.hero h1{font-size:clamp(46px,8vw,72px);line-height:1.05;font-weight:600;letter-spacing:-.03em;margin:0 0 22px}
+.hero .role{color:var(--accent);font-size:clamp(24px,3.4vw,32px);font-weight:500;margin:0 0 22px}
+.hero p.lead{color:var(--muted);font-size:clamp(19px,2.4vw,24px);line-height:1.55;max-width:830px;margin:0 0 36px}
+.icons{display:flex;gap:20px}
+.ib{width:55px;height:55px;border-radius:10px;background:var(--chip);display:grid;place-items:center;color:var(--muted);transition:color .15s,transform .15s}
+.ib:hover{color:var(--accent);transform:translateY(-2px)}
+.ib svg{width:25px;height:25px}
+.down{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);color:var(--muted);width:28px;height:28px}
+.down svg{display:block;width:28px;height:28px}
+@media (max-height:640px){.down{display:none}}
+
+/* about */
+.about{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:56px;align-items:center}
+.about p{color:var(--muted);font-size:20px;line-height:1.65;margin:0 0 20px}
+.photo{aspect-ratio:1/1;max-width:100%;border-radius:20px;background:var(--chip);border:1px solid var(--line);display:grid;place-items:center;overflow:hidden;position:relative}
+.photo span{font-size:clamp(80px,14vw,150px);font-weight:300;letter-spacing:-.04em;color:var(--accent)}
+.photo small{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:var(--muted);font-size:13px}
+@media (max-width:820px){.about{grid-template-columns:minmax(0,1fr);gap:36px}.photo{max-width:420px}}
+
+/* project cards */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:30px;display:flex;flex-direction:column;gap:18px;min-width:0;transition:box-shadow .2s,transform .2s}
+.card:hover{box-shadow:0 10px 30px color-mix(in srgb,var(--fg) 9%,transparent);transform:translateY(-2px)}
+.card h3{font-size:30px;line-height:1.33;font-weight:600;letter-spacing:-.015em;margin:0;transition:color .15s}
+.card:hover h3{color:var(--accent)}
+.card p{margin:0;color:var(--muted);font-size:18px;line-height:1.65}
+.card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:10px;color:var(--muted);font-size:17px}
+.card li{display:flex;gap:12px}
+.card li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--accent);margin-top:.7em}
+.date{color:var(--accent);font-weight:500;font-size:17px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:auto}
+.chip{background:var(--chip);color:var(--chip-fg);font-size:15px;font-weight:500;padding:5px 16px;border-radius:999px}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.grid.three .card h3{font-size:22px}
+@media (max-width:960px){.grid.three{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:760px){.grid{grid-template-columns:minmax(0,1fr)}.card{padding:24px}}
+
+/* timeline */
+.tl{position:relative;display:flex;flex-direction:column;gap:32px}
+.tl::before{content:"";position:absolute;left:50%;top:6px;bottom:6px;width:1px;background:var(--tl)}
+.tl-item{position:relative;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:80px}
+.tl-item::before{content:"";position:absolute;left:50%;top:10px;width:16px;height:16px;margin-left:-8px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px var(--card)}
+.tl-item .card{grid-column:2;padding:28px 30px}
+.tl-item:nth-child(odd) .card{grid-column:1;text-align:right}
+.tl-item:nth-child(odd) .card li{flex-direction:row-reverse}
+.tl-item .org{color:var(--muted);font-size:20px;margin-top:-10px}
+.tl-item h3{font-size:26px}
+@media (max-width:760px){
+  .tl::before{left:8px}
+  .tl-item{grid-template-columns:minmax(0,1fr);padding-left:40px}
+  .tl-item::before{left:8px}
+  .tl-item .card,.tl-item:nth-child(odd) .card{grid-column:1;text-align:left}
+  .tl-item:nth-child(odd) .card li{flex-direction:row}
+}
+
+/* contact + footer */
+.contact{max-width:640px;margin:0 auto;display:flex;flex-direction:column;align-items:center;gap:18px;text-align:center}
+.mail{font-size:clamp(22px,4vw,32px);font-weight:600;letter-spacing:-.01em;overflow-wrap:anywhere}
+.row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;align-items:center;color:var(--muted);font-size:18px}
+.ghost{background:none;color:var(--accent);border:1px solid var(--accent)}
+.ghost:hover{background:var(--accent);color:var(--on-accent);filter:none}
+footer{background:var(--card);border-top:1px solid var(--line)}
+footer .in{display:grid;grid-template-columns:1fr auto 1fr;gap:20px;align-items:center;padding-block:40px}
+footer .name{color:var(--accent);font-size:22px;font-weight:500}
+footer small{display:block;color:var(--muted);font-size:16px}
+footer .mid{color:var(--muted);font-size:17px;text-align:center}
+footer .icons{justify-content:flex-end;gap:14px}
+footer .ib{width:40px;height:40px;background:none}
+footer .ib svg{width:22px;height:22px}
+@media (max-width:760px){footer .in{grid-template-columns:minmax(0,1fr);text-align:center}footer .icons{justify-content:center}}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-mail" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6.5 8.5-6.5"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16M5 13l7 7 7-7"/></symbol>
+  <symbol id="i-in" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10.5V16M8 7.8v.1M12 16v-5.5M12 13c0-1.6 1-2.6 2.4-2.6S16.5 11.4 16.5 13V16"/></symbol>
+  <symbol id="i-dl" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11M7 11l5 5 5-5M4 20h16"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+</svg>
+
+<div class="herobg" aria-hidden="true"></div>
+<canvas id="dots" aria-hidden="true"></canvas>
+
+<header class="nav" id="nav">
+  <div class="in">
+    <a class="logo" href="#home" aria-label="Jibin Johny, home">JJ</a>
+    <nav class="links" aria-label="Main">
+      <a class="l" href="#home">Home</a>
+      <a class="l" href="#about">About</a>
+      <a class="l" href="#projects">Projects</a>
+      <a class="l" href="#experience">Experience</a>
+      <a class="l" href="#skills">Skills</a>
+      <a class="l" href="#contact">Contact</a>
+      <a class="btn" href="Jibin_Johny_Resume.pdf" download="Jibin_Johny_Resume.pdf" style="margin-left:4px"><svg><use href="#i-dl"/></svg>Resume</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="home" style="padding-inline:0">
+    <div class="hero">
+      <div class="rule"></div>
+      <h1>Jibin Johny</h1>
+      <p class="role">Hardware Design Engineer</p>
+      <p class="lead">Passionate about PCBs, embedded hardware, and electronics that just work. Specializing in schematic and PCB layout, power design, and EMI-aware routing.</p>
+      <div class="icons">
+        <a class="ib" href="mailto:jibin8832@gmail.com" title="jibin8832@gmail.com" aria-label="Email jibin8832@gmail.com"><svg><use href="#i-mail"/></svg></a>
+        <a class="ib" href="tel:+916238183750" title="+91 62381 83750" aria-label="Call +91 62381 83750"><svg><use href="#i-phone"/></svg></a>
+        <a class="ib" href="https://www.linkedin.com/in/jibinjohny26" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a>
+      </div>
+    </div>
+    <a class="down" href="#about" aria-label="Scroll to About"><svg><use href="#i-down"/></svg></a>
+  </section>
+
+  <section id="about">
+    <div class="in">
+      <div class="about">
+        <div>
+          <div class="rule"></div>
+          <h2>About Me</h2>
+          <p>I'm an electronics and communication engineer finishing my BTech at the College of Engineering Chengannur. I design embedded hardware from schematic to layout: picking components, placing and routing the board, then clearing ERC and DRC.</p>
+          <p>My technical skills include PCB design in KiCad, analog simulation in LTspice, and lab testing with oscilloscopes and function generators. I'm currently a hardware engineer intern at Aronlabz Tech, working on rugged embedded products.</p>
+          <p>I'm looking for hardware design roles where I can keep learning on real products.</p>
+        </div>
+        <div class="photo" role="img" aria-label="Photo placeholder"><span>JJ</span><small>Your photo goes here</small></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects" class="alt">
+    <div class="in">
+      <div class="center">
+        <div class="rule"></div>
+        <h2>Projects</h2>
+        <p class="sub">A selection of hardware projects that show my board design and problem-solving approach.</p>
+      </div>
+      <div class="grid">
+        <article class="card">
+          <span class="date">Oct 2026 – Nov 2026</span>
+          <h3>Solar-Powered Public Address Board</h3>
+          <p>An ESP32 board with a solar charger, battery protection and a regulated 3.3 V rail. It carries an I2S microphone and amplifier, GPS over UART, and USB-C programming through a CH340C.</p>
+          <ul>
+            <li>Designed the full board in KiCad, including the LT3652 solar charging and Li-ion protection.</li>
+            <li>Laid it out for EMI/EMC: compact charger loop, antenna keepout, microphone kept apart from the amplifier and inductor, ground pours.</li>
+            <li>Cleared ERC and DRC against PCBPower design rules.</li>
+          </ul>
+          <div class="chips"><span class="chip">ESP32</span><span class="chip">KiCad</span><span class="chip">LT3652</span><span class="chip">Li-ion</span><span class="chip">I2S</span><span class="chip">EMI/EMC</span></div>
+        </article>
+        <article class="card">
+          <span class="date">Oct 2026 – Nov 2026</span>
+          <h3>Custom ESP32-S3 Development Board</h3>
+          <p>A development board built around the ESP32-S3-WROOM-1 module, with USB-C, an AMS1117-3.3 regulator, boot circuitry, a status LED, and GPIO and power headers.</p>
+          <ul>
+            <li>Took it from schematic through component selection, footprint assignment, placement, routing and DRC.</li>
+            <li>Routed the USB D+/D- pair and added an antenna keep-out zone to protect RF performance.</li>
+          </ul>
+          <div class="chips"><span class="chip">ESP32-S3</span><span class="chip">KiCad</span><span class="chip">USB-C</span><span class="chip">PCB Design</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="in">
+      <div class="center">
+        <div class="rule"></div>
+        <h2>Experience</h2>
+        <p class="sub">Internships, hands-on work and education that shaped my hardware engineering journey.</p>
+      </div>
+      <div class="tl">
+        <div class="tl-item">
+          <div class="card">
+            <span class="date">Sept 2026 – Present</span>
+            <h3>Hardware Engineer Intern</h3>
+            <div class="org">Aronlabz Tech Pvt Ltd</div>
+            <ul>
+              <li>Designed, brought up and validated rugged embedded hardware across the product lifecycle.</li>
+              <li>Designed schematics and PCB layouts for testing and peripheral boards, including component selection and routing optimization.</li>
+              <li>Designed and ran thermal and signal integrity tests using lab instruments.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="card">
+            <span class="date">June 2025</span>
+            <h3>Embedded Systems Intern</h3>
+            <div class="org">Techmaghi</div>
+            <ul>
+              <li>Programmed wireless control for a robotic car in a hands-on workshop, working on motor control logic and wireless communication protocols.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="card">
+            <span class="date">Jan 2023 – Feb 2023</span>
+            <h3>Embedded Systems Intern</h3>
+            <div class="org">ThinkfoTech</div>
+            <ul>
+              <li>Built and tested a smart water tank monitor with IoT sensors and microcontrollers, automating water-level tracking.</li>
+              <li>Worked on the whole system from sensor wiring to data logging.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="card">
+            <span class="date">2023 – 2026</span>
+            <h3>BTech, Electronics and Communication Engineering</h3>
+            <div class="org">College of Engineering Chengannur</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" class="alt">
+    <div class="in">
+      <div class="center">
+        <div class="rule"></div>
+        <h2>Skills</h2>
+        <p class="sub">The tools and fundamentals I use to design and test hardware.</p>
+      </div>
+      <div class="grid three">
+        <div class="card"><h3>Design tools</h3><div class="chips" style="margin-top:0"><span class="chip">KiCad</span><span class="chip">LTspice</span></div></div>
+        <div class="card"><h3>Electronics</h3><div class="chips" style="margin-top:0"><span class="chip">Circuit design and analysis</span><span class="chip">Oscilloscopes</span><span class="chip">Function generators</span><span class="chip">Soldering</span><span class="chip">MCU</span><span class="chip">SPI</span><span class="chip">I2C</span><span class="chip">UART</span></div></div>
+        <div class="card"><h3>Programming</h3><div class="chips" style="margin-top:0"><span class="chip">MATLAB</span><span class="chip">C</span><span class="chip">C#</span><span class="chip">C++</span><span class="chip">Python</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="in">
+      <div class="contact">
+        <div class="rule"></div>
+        <h2>Get in touch</h2>
+        <p class="sub" style="margin-bottom:12px">Open to hardware design and embedded roles. Reach out through any of the links below.</p>
+        <div class="icons">
+          <a class="ib" href="mailto:jibin8832@gmail.com" title="jibin8832@gmail.com" aria-label="Email jibin8832@gmail.com"><svg><use href="#i-mail"/></svg></a>
+          <a class="ib" href="tel:+916238183750" title="+91 62381 83750" aria-label="Call +91 62381 83750"><svg><use href="#i-phone"/></svg></a>
+          <a class="ib" href="https://www.linkedin.com/in/jibinjohny26" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="in">
+    <div><div class="name">Jibin Johny</div><small>© 2026 All rights reserved.</small></div>
+    <div class="mid">Open to opportunities and collaborations</div>
+    <div class="icons"><a class="ib" href="mailto:jibin8832@gmail.com" title="jibin8832@gmail.com" aria-label="Email jibin8832@gmail.com"><svg><use href="#i-mail"/></svg></a><a class="ib" href="tel:+916238183750" title="+91 62381 83750" aria-label="Call +91 62381 83750"><svg><use href="#i-phone"/></svg></a><a class="ib" href="https://www.linkedin.com/in/jibinjohny26" target="_blank" rel="noopener" aria-label="LinkedIn"><svg><use href="#i-in"/></svg></a></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var nav=document.getElementById('nav');
+  function onScroll(){nav.classList.toggle('scrolled',window.scrollY>8)}
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+
+  var c=document.getElementById('dots'),x=c.getContext('2d'),dots=[],W=0,H=0,dpr=Math.min(window.devicePixelRatio||1,2);
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function size(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+  function seed(){dots=[];var n=Math.round(Math.min(110,Math.max(36,W*H/14000)));for(var i=0;i<n;i++)dots.push({x:Math.random()*W,y:Math.random()*H,r:.7+Math.random()*1.9,a:.35+Math.random()*.45,vy:.18+Math.random()*.55,p:Math.random()*6.2832,s:.004+Math.random()*.012,sw:.1+Math.random()*.3})}
+  function color(){return getComputedStyle(document.documentElement).getPropertyValue('--dot').trim()||'#94a3b8'}
+  function draw(){
+    x.clearRect(0,0,W,H);var col=color();x.fillStyle=col;
+    for(var i=0;i<dots.length;i++){var d=dots[i];
+      if(!still){d.p+=d.s;d.x+=Math.sin(d.p)*d.sw;d.y+=d.vy;if(d.y>H+6){d.y=-6;d.x=Math.random()*W}if(d.x<-6)d.x=W+6;if(d.x>W+6)d.x=-6}
+      x.globalAlpha=d.a;x.beginPath();x.arc(d.x,d.y,d.r,0,6.2832);x.fill()}
+    x.globalAlpha=1;if(!still)requestAnimationFrame(draw)
+  }
+  size();seed();draw();
+  addEventListener('resize',function(){size();seed();if(still)draw()});
+})();
+</script>
+
+</body>
+</html>
